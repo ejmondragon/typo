@@ -4,12 +4,32 @@ describe Admin::CategoriesController do
   render_views
 
   before(:each) do
-    Factory(:blog)
+    #Factory(:blog)
     #TODO Delete after removing fixtures
     Profile.delete_all
     henri = Factory(:user, :login => 'henri', :profile => Factory(:profile_admin, :label => Profile::ADMIN))
     request.session = { :user => henri.id }
   end
+
+
+
+
+  it 'calls the method edit to test it and  if new_or_edit work with NON nil params' do
+    post :edit, {:controller => "categories", :action => "edit"}
+  end
+  
+  it 'calls the method edit to test it and  if new_or_edit work WITH nil params' do
+    params = {:id => nil}    
+    get :edit, params
+  end
+  
+  it 'calls the method new to test it' do
+    post :new, {:controller => "categories", :action => "new"}
+  end
+
+
+
+
 
   it "test_index" do
     get :index
